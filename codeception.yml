@@ -1,0 +1,30 @@
+namespace: Tests\Codeception
+support_namespace: Support
+suites:
+  Api:
+    actor: ApiTester
+    modules:
+      enabled:
+        - \Helper\Api
+        - REST:
+            url: http://localhost:8000
+            depends: PhpBrowser
+        - Db:
+            dsn: "mysql:host=%DB_HOST%:%DB_PORT%;dbname=%DB_DATABASE%"
+            user: "%DB_USERNAME%"
+            password: "%DB_PASSWORD%"
+            dump: 
+              - tests/Codeception/Support/Data/initial.sql
+            populate: true
+            cleanup: true
+paths:
+  tests: tests
+  output: tests/Codeception/_output
+  data: tests/Codeception/Support/Data
+  support: tests/Codeception/Support
+settings:
+  shuffle: true
+  lint: true
+params:
+  - env
+  - .env.testing
